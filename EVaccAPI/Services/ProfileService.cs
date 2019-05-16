@@ -17,7 +17,7 @@ namespace EVaccAPI.Services
         public int RegisterUser(RegistrationRequest registerData)
         {
             var userId = 0;
-            var query = string.Format("select userId from UserDetails where Email='{0}' or Mobile = '{1}' or UserName = '{2}'", registerData.Email, registerData.Mobile, registerData.UserName);
+            var query = string.Format("select userId from UserDetails where Mobile = '{1}' or UserName = '{2}'", registerData.Email, registerData.Mobile, registerData.UserName);
             var existingUserId = Convert.ToInt32(dbService.ExecuteScalar(query));
             if (existingUserId > 0)
             {
@@ -38,9 +38,9 @@ namespace EVaccAPI.Services
         public bool UpdateProfile(ProfileRequest profileData)
         {
             var success = false;
-            var query = string.Format("select userId from UserDetails where (Email='{0}' or Mobile = '{1}') and userId <> {2}", profileData.Email, profileData.Mobile, profileData.UserId);
+            var query = string.Format("select userId from UserDetails where (Mobile = '{1}') and userId = {2}", profileData.Email, profileData.Mobile, profileData.UserId);
             var existingUserId = Convert.ToInt32(dbService.ExecuteScalar(query));
-            if (existingUserId == 0)
+            if (existingUserId > 0)
             {
                 query = string.Format("update UserDetails set FullName='{0}', Address='{1}', PINCode='{2}', Mobile='{3}', Email='{4}', RegistrationId = '{5}', RegisteredPHC = '{6}' output inserted.UserId where UserId={7}",
                     profileData.FullName, profileData.Address, profileData.PinCode, profileData.Mobile, profileData.Email,profileData.RegistrationId, profileData.RegisteredPHC, profileData.UserId);
