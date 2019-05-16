@@ -28,6 +28,19 @@ namespace EVaccAPI.Services
                 return false;
             }
         }
-       
+
+        public bool DeleteFieldStaffComment(int userid)
+        {
+            try
+            {
+                var query = string.Format(@"DELETE FROM StaffNote where FieldStaffID = {0}", userid);
+                dbService.ExecuteNonQuery(query);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

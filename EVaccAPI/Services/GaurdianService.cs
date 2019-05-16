@@ -20,7 +20,7 @@ namespace EVaccAPI.Services
             InfantDetailsResponse infantDetails = null;
             try
             {
-                var query = string.Format(@"select BirthId, FullName, DOB, POB, MothersName, a.InfantID, b.NextVaccinationDate from InfantDetails a left join vaccinationDetails b on a.infantId = b.InfantId
+                var query = string.Format(@"select BirthId, FullName,  CONVERT(varchar, DOB, 103) AS DOB, POB, MothersName, a.InfantID, b.NextVaccinationDate from InfantDetails a left join vaccinationDetails b on a.infantId = b.InfantId
                         where BirthId ='{0}' AND b.VaccinationId = (SELECT MAX(VaccinationId) FROM vaccinationDetails where InfantID =  a.InfantID)", birthId);
                 var infantData = dbService.ExecuteReader(query);
                 if (infantData.Rows.Count > 0)
@@ -29,6 +29,7 @@ namespace EVaccAPI.Services
                     infantDetails.BirthId = Convert.ToString(infantData.Rows[0]["BirthId"]);
                     infantDetails.FullName = Convert.ToString(infantData.Rows[0]["FullName"]);
                     infantDetails.DOB = Convert.ToString(infantData.Rows[0]["DOB"]);
+                     
                     infantDetails.POB = Convert.ToString(infantData.Rows[0]["POB"]);
                     infantDetails.MothersName = Convert.ToString(infantData.Rows[0]["MothersName"]);
                     infantDetails.InfantId = Convert.ToInt32(infantData.Rows[0]["InfantID"]);

@@ -42,8 +42,8 @@ namespace EVaccAPI.Services
             var existingUserId = Convert.ToInt32(dbService.ExecuteScalar(query));
             if (existingUserId == 0)
             {
-                query = string.Format("update UserDetails set FullName='{0}', Address='{1}', PINCode='{2}', Mobile='{3}', Email='{4}' output inserted.UserId where UserId={5}",
-                    profileData.FullName, profileData.Address, profileData.PinCode, profileData.Mobile, profileData.Email, profileData.UserId);
+                query = string.Format("update UserDetails set FullName='{0}', Address='{1}', PINCode='{2}', Mobile='{3}', Email='{4}', RegistrationId = '{5}', RegisteredPHC = '{6}' output inserted.UserId where UserId={7}",
+                    profileData.FullName, profileData.Address, profileData.PinCode, profileData.Mobile, profileData.Email,profileData.RegistrationId, profileData.RegisteredPHC, profileData.UserId);
                 var affectedUserId = Convert.ToInt32(dbService.ExecuteScalar(query));
                 success = (affectedUserId > 0);
             }

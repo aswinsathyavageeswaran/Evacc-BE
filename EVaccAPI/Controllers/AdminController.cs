@@ -26,11 +26,11 @@ namespace EVaccAPI.Controllers
             return adminService.GetAdminFilterCriteria();
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("evacc/admin/FilteredGraphData")]
-        public void GetFilteredGraphData(FilterCriteriaRequest filterCriteria)
+        public FilterResponse GetFilteredGraphData(FilterCriteriaRequest filterCriteria)
         {
-            adminService.GetFilteredGraphData(filterCriteria);
+            return adminService.GetFilteredGraphData(filterCriteria);
         }
 
         [HttpGet]
@@ -47,18 +47,24 @@ namespace EVaccAPI.Controllers
             return adminService.GetAllFieldStaffsForLocalAdmin(UserId);
         }
 
-        [HttpPost]
-        [Route("evacc/DeleteFieldStaffComment/{Userid}")]
-        public bool DeleteFieldStaffComment(int userid)
+        [HttpGet]
+        [Route("evacc/admin/GetAllHospitalsForLocalAdmin/{UserId}")]
+        public IEnumerable<RegistrationResponse> GetAllHospitalsForLocalAdmin(int UserId)
         {
-            return adminService.DeleteFieldStaffComment(userid);
+            return adminService.GetAllHospitalsForLocalAdmin(UserId);
         }
-
         [HttpGet]
         [Route("evacc/admin/SearchFieldStaff/{SearchString}")]
         public IEnumerable<RegistrationResponse> SearchFieldStaff(string searchstring)
         {
             return adminService.SearchFieldStaff(searchstring);
+        }
+
+        [HttpPost]
+        [Route("evacc/DeleteFieldStaff/{Userid}")]
+        public bool DeleteFieldStaffComment(int userid)
+        {
+            return adminService.DeleteFieldStaff(userid);
         }
     }
 }

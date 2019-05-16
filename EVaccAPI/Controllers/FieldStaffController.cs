@@ -26,6 +26,11 @@ namespace EVaccAPI.Controllers
             return fieldService.AddFieldStaffComment(registrationData);
         }
 
-       
+        [HttpPost]
+        [Route("evacc/DeleteFieldStaffComment/{Userid}")]
+        public bool DeleteFieldStaffComment(int userid)
+        {
+            return fieldService.DeleteFieldStaffComment(userid);
+        }
     }
 }

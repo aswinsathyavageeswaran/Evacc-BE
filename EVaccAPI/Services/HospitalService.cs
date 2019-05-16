@@ -149,7 +149,7 @@ namespace EVaccAPI.Services
             query = string.Format(@"SELECT InfantId,SchId,Vaccine,StartOn,EndOn,VAccStartOn  As VaccinatedOrDueDate,'Pending' As Status FROM ListOfUpcomingVacc WHERE InfantId = {0}", InfantId);
             vaccinationDataList.Merge(dbService.ExecuteReader(query));
             //OverDue
-            query = string.Format(@"SELECT InfantId,SchId,Vaccine,StartOn,EndOn,VAccStartOn  As VaccinatedOrDueDate,'OverDue' As Status FROM ListOfVaccinationOverDue WHERE InfantId = {0}", InfantId);
+            query = string.Format(@"SELECT InfantId,SchId,Vaccine,StartOn,EndOn,VAccStartOn  As VaccinatedOrDueDate,'Overdue' As Status FROM ListOfVaccinationOverDue WHERE InfantId = {0}", InfantId);
             vaccinationDataList.Merge(dbService.ExecuteReader(query));
 
             DataView dv = vaccinationDataList.DefaultView;
@@ -224,22 +224,16 @@ namespace EVaccAPI.Services
         private string GetSchedulePeriod(double starton, double endon)
         {
             string period = "";
-            switch (Convert.ToDouble(starton))
+            if (starton == 0)
+                period = "At Birth";
+            else if(starton == 1.5 || starton == 2.5 || starton == 3.5)
+                period = string.Format("{0} Weeks", starton * 4);
+            else
             {
-                case 0:
-                    period = "At Birth";
-                    break;
-                case 1.5:
-                case 2.5:
-                case 3.5:
-                    period = string.Format("{0} Weeks", starton * 4);
-                    break;
-                default:
-                    if (starton < 12)
-                        period = string.Format("{0}-{1} Months", starton, endon);
-                    else
-                        period = string.Format("{0}-{1} Yr", starton / 12,endon / 12);
-                    break;
+                if (starton < 12)
+                    period = string.Format("{0}-{1} Months", starton, endon);
+                else
+                    period = string.Format("{0}-{1} Yr", starton / 12, endon / 12);
             }
 
             return period;

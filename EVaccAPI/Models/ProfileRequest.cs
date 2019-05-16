@@ -12,6 +12,9 @@ namespace EVaccAPI.Models
         public string Address { get; set; }
         public string PinCode { get; set; }
         public string Mobile { get; set; }
-        public string Email { get; set; }      
+        public string Email { get; set; }
+        public string RegistrationId { get; set; }
+        public string RegisteredPHC { get; set; }
+
     }
 }

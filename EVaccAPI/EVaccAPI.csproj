@@ -105,6 +105,7 @@
     <Compile Include="Models\AdminFilterCriteriaList.cs" />
     <Compile Include="Models\CommentRequest.cs" />
     <Compile Include="Models\FilterCriteriaRequest.cs" />
+    <Compile Include="Models\FilterResponse.cs" />
     <Compile Include="Models\InfantDetails.cs" />
     <Compile Include="Models\InfantRequest.cs" />
     <Compile Include="Models\InfantSearchRequest.cs" />
